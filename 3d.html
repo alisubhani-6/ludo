@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BTech Fest — Section Ideas Preview</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Barlow+Condensed:wght@400;700;900&family=Barlow:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --purple: #6a11cb;
+      --pink: #e040fb;
+      --blue: #3b82f6;
+      --card-bg: rgba(106,17,203,0.08);
+      --border: rgba(224,64,251,0.15);
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; background: #0a0a0f; color: #fff; font-family: 'Barlow', sans-serif; }
+    .section { padding: 100px 0; position: relative; overflow: hidden; border-top: 1px solid rgba(255,255,255,0.04); }
+    .section-label { font-family: 'Orbitron', sans-serif; font-size: 0.65rem; letter-spacing: 4px; color: var(--pink); text-transform: uppercase; margin-bottom: 12px; }
+    .section-title { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(2.2rem,5vw,3.8rem); font-weight: 900; color: #fff; line-height: 1; letter-spacing: -0.5px; }
+    .section-title span { background: linear-gradient(to right,var(--pink),var(--blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+    /* ── OPTION LABELS ── */
+    .option-tag { display: inline-block; font-family: 'Orbitron', sans-serif; font-size: 0.6rem; letter-spacing: 3px; background: linear-gradient(to right,var(--purple),var(--pink)); padding: 6px 16px; border-radius: 50px; margin-bottom: 48px; text-transform: uppercase; }
+
+    /* ══ 1. COUNTDOWN ══ */
+    #countdown { background: #06030f; }
+    .countdown-box { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 28px 36px; min-width: 130px; transition: border-color 0.3s, transform 0.3s; }
+    .countdown-box:hover { border-color: rgba(224,64,251,0.4); transform: translateY(-4px); }
+    .countdown-num { font-family: 'Orbitron', sans-serif; font-size: 3rem; font-weight: 700; background: linear-gradient(to right,var(--pink),var(--blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; }
+    .countdown-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; letter-spacing: 3px; color: rgba(255,255,255,0.35); text-transform: uppercase; margin-top: 8px; }
+    .countdown-divider { font-family: 'Orbitron', sans-serif; font-size: 2.5rem; color: rgba(224,64,251,0.3); align-self: center; padding-bottom: 12px; }
+
+    /* ══ 2. SCHEDULE ══ */
+    #schedule { background: #04020a; }
+    .schedule-day-label { font-family: 'Orbitron', sans-serif; font-size: 0.7rem; letter-spacing: 3px; color: var(--pink); text-transform: uppercase; margin-bottom: 20px; padding: 10px 16px; background: rgba(224,64,251,0.06); border-left: 2px solid var(--pink); border-radius: 0 6px 6px 0; display: inline-block; }
+    .schedule-item { display: flex; gap: 20px; align-items: flex-start; padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.05); transition: background 0.2s; border-radius: 8px; }
+    .schedule-item:last-child { border-bottom: none; }
+    .schedule-item:hover { background: rgba(106,17,203,0.06); padding-left: 8px; }
+    .schedule-time { font-family: 'Orbitron', sans-serif; font-size: 0.62rem; color: var(--pink); letter-spacing: 1px; min-width: 82px; padding-top: 3px; opacity: 0.8; }
+    .schedule-title { font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; font-weight: 700; color: #fff; letter-spacing: 0.5px; }
+    .schedule-sub { font-family: 'Barlow', sans-serif; font-size: 0.78rem; color: rgba(255,255,255,0.35); margin-top: 3px; }
+    .schedule-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--pink); margin-top: 6px; flex-shrink: 0; box-shadow: 0 0 6px var(--pink); }
+
+    /* ══ 3. FAQ ══ */
+    #faq { background: #08040f; }
+    .faq-wrap { max-width: 760px; margin: 0 auto; }
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-q { width: 100%; background: none; border: none; color: #fff; font-family: 'Barlow Condensed', sans-serif; font-size: 1.1rem; font-weight: 700; letter-spacing: 0.5px; padding: 22px 0; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: color 0.2s; text-align: left; }
+    .faq-q:hover { color: var(--pink); }
+    .faq-q i { font-size: 1.1rem; color: var(--pink); transition: transform 0.35s; flex-shrink: 0; margin-left: 16px; }
+    .faq-q.open i { transform: rotate(45deg); }
+    .faq-a { font-family: 'Barlow', sans-serif; font-size: 0.92rem; color: rgba(255,255,255,0.5); line-height: 1.9; max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s ease; }
+    .faq-a.open { max-height: 200px; padding-bottom: 20px; }
+
+    /* ══ 4. PRIZES ══ */
+    #prizes { background: #04020a; }
+    .prizes-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; max-width: 900px; margin: 0 auto; }
+    .prize-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 44px 24px; text-align: center; position: relative; overflow: hidden; transition: transform 0.3s, border-color 0.3s; }
+    .prize-card:hover { transform: translateY(-8px); }
+    .prize-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; }
+    .prize-card::after { content: ''; position: absolute; inset: 0; opacity: 0; transition: opacity 0.3s; border-radius: 20px; }
+    .prize-gold { border-color: rgba(245,158,11,0.25); }
+    .prize-gold:hover { border-color: rgba(245,158,11,0.5); }
+    .prize-gold::before { background: linear-gradient(to right,#f59e0b,#fde68a); }
+    .prize-gold::after { background: radial-gradient(ellipse at top,rgba(245,158,11,0.06),transparent 60%); }
+    .prize-gold:hover::after { opacity: 1; }
+    .prize-silver { border-color: rgba(148,163,184,0.25); }
+    .prize-silver:hover { border-color: rgba(148,163,184,0.5); }
+    .prize-silver::before { background: linear-gradient(to right,#94a3b8,#e2e8f0); }
+    .prize-silver::after { background: radial-gradient(ellipse at top,rgba(148,163,184,0.06),transparent 60%); }
+    .prize-silver:hover::after { opacity: 1; }
+    .prize-bronze { border-color: rgba(180,83,9,0.25); }
+    .prize-bronze:hover { border-color: rgba(251,191,36,0.5); }
+    .prize-bronze::before { background: linear-gradient(to right,#b45309,#fbbf24); }
+    .prize-bronze::after { background: radial-gradient(ellipse at top,rgba(180,83,9,0.06),transparent 60%); }
+    .prize-bronze:hover::after { opacity: 1; }
+    .prize-icon { font-size: 2.8rem; margin-bottom: 14px; display: block; }
+    .prize-place { font-family: 'Orbitron', sans-serif; font-size: 0.62rem; letter-spacing: 3px; color: rgba(255,255,255,0.35); text-transform: uppercase; margin-bottom: 12px; }
+    .prize-amount { font-family: 'Barlow Condensed', sans-serif; font-size: 2.4rem; font-weight: 900; line-height: 1; }
+    .prize-gold .prize-amount { background: linear-gradient(to right,#f59e0b,#fde68a); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .prize-silver .prize-amount { background: linear-gradient(to right,#94a3b8,#e2e8f0); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .prize-bronze .prize-amount { background: linear-gradient(to right,#b45309,#fbbf24); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .prize-label { font-family: 'Barlow', sans-serif; font-size: 0.78rem; color: rgba(255,255,255,0.32); margin-top: 10px; }
+    .prize-total { text-align: center; margin-top: 40px; font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; letter-spacing: 2px; color: rgba(255,255,255,0.25); text-transform: uppercase; }
+    .prize-total span { color: var(--pink); }
+
+    @media (max-width: 768px) {
+      .prizes-grid { grid-template-columns: 1fr; max-width: 360px; }
+      .countdown-num { font-size: 2rem; }
+      .countdown-box { padding: 20px 24px; min-width: 80px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ OPTION 1: COUNTDOWN ══ -->
+  <section class="section" id="countdown">
+    <div class="container text-center">
+      <div class="option-tag">Option 1</div>
+      <div class="section-label">// Event Starts In</div>
+      <h2 class="section-title mb-5">THE CLOCK IS <span>TICKING</span></h2>
+      <div class="d-flex justify-content-center align-items-center gap-3 flex-wrap">
+        <div class="countdown-box">
+          <div class="countdown-num" id="cd-days">00</div>
+          <div class="countdown-label">Days</div>
+        </div>
+        <div class="countdown-divider">:</div>
+        <div class="countdown-box">
+          <div class="countdown-num" id="cd-hours">00</div>
+          <div class="countdown-label">Hours</div>
+        </div>
+        <div class="countdown-divider">:</div>
+        <div class="countdown-box">
+          <div class="countdown-num" id="cd-mins">00</div>
+          <div class="countdown-label">Minutes</div>
+        </div>
+        <div class="countdown-divider">:</div>
+        <div class="countdown-box">
+          <div class="countdown-num" id="cd-secs">00</div>
+          <div class="countdown-label">Seconds</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ OPTION 2: SCHEDULE ══ -->
+  <section class="section" id="schedule">
+    <div class="container">
+      <div class="option-tag">Option 2</div>
+      <div class="text-center mb-5">
+        <div class="section-label">// What's Happening</div>
+        <h2 class="section-title">EVENT <span>SCHEDULE</span></h2>
+      </div>
+      <div class="row g-5">
+        <div class="col-md-6">
+          <div class="schedule-day-label">Day 1 — May 8</div>
+          <div class="mt-3">
+            <div class="schedule-item">
+              <div class="schedule-dot"></div>
+              <span class="schedule-time">09:00 AM</span>
+              <div><div class="schedule-title">Opening Ceremony</div><div class="schedule-sub">Main Auditorium</div></div>
+            </div>
+            <div class="schedule-item">
+              <div class="schedule-dot"></div>
+              <span class="schedule-time">11:00 AM</span>
+              <div><div class="schedule-title">AI & Machine Learning Workshop</div><div class="schedule-sub">Lab Block A</div></div>
+            </div>
+            <div class="schedule-item">
+              <div class="schedule-dot"></div>
+              <span class="schedule-time">02:00 PM</span>
+              <div><div class="schedule-title">Startup Pitch Competition</div><div class="schedule-sub">Innovation Hall</div></div>
+            </div>
+            <div class="schedule-item">
+              <div class="schedule-dot"></div>
+              <span class="schedule-time">05:00 PM</span>
+              <div><div class="schedule-title">Networking Session</div><div class="schedule-sub">Courtyard</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="schedule-day-label">Day 2 — May 9</div>
+          <div class="mt-3">
+            <div class="schedule-item">
+              <div class="schedule-dot"></div>
+              <span class="schedule-time">10:00 AM</span>
+              <div><div class="schedule-title">Cybersecurity CTF Challenge</div><div class="schedule-sub">Lab Block B</div></div>
+            </div>
+            <div class="schedule-item">
+              <div class="schedule-dot"></div>
+              <span class="schedule-time">12:00 PM</span>
+              <div><div class="schedule-title">Panel: Future of Tech in Pakistan</div><div class="schedule-sub">Main Auditorium</div></div>
+            </div>
+            <div class="schedule-item">
+              <div class="schedule-dot"></div>
+              <span class="schedule-time">03:00 PM</span>
+              <div><div class="schedule-title">Project Showcase & Judging</div><div class="schedule-sub">Exhibition Floor</div></div>
+            </div>
+            <div class="schedule-item">
+              <div class="schedule-dot"></div>
+              <span class="schedule-time">06:00 PM</span>
+              <div><div class="schedule-title">Awards & Closing Ceremony</div><div class="schedule-sub">Main Auditorium</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ OPTION 3: FAQ ══ -->
+  <section class="section" id="faq">
+    <div class="container">
+      <div class="option-tag">Option 3</div>
+      <div class="text-center mb-5">
+        <div class="section-label">// Got Questions?</div>
+        <h2 class="section-title">FREQUENTLY <span>ASKED</span></h2>
+      </div>
+      <div class="faq-wrap">
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">Who can attend BTech Fest 2026? <i class="bi bi-plus-circle"></i></button>
+          <div class="faq-a">BTech Fest is open to all university students, professionals, and tech enthusiasts. Whether you're a developer, designer, or entrepreneur — there's something for you.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">Is registration free? <i class="bi bi-plus-circle"></i></button>
+          <div class="faq-a">General attendance is free. Some workshops and competitions may have a small registration fee. Check the Costs & Tickets section for full details.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">Where is the venue? <i class="bi bi-plus-circle"></i></button>
+          <div class="faq-a">BTech Fest 2026 is hosted at Beacon House National University, Lahore, Pakistan on 8–9 May 2026.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">Can I participate in multiple competitions? <i class="bi bi-plus-circle"></i></button>
+          <div class="faq-a">Yes! You can register for multiple categories as long as the timings don't clash. We recommend checking the full schedule before signing up.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">Will there be food and refreshments? <i class="bi bi-plus-circle"></i></button>
+          <div class="faq-a">Yes, food stalls and refreshment counters will be available throughout both days of the event.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ OPTION 4: PRIZES ══ -->
+  <section class="section" id="prizes">
+    <div class="container">
+      <div class="option-tag">Option 4</div>
+      <div class="text-center mb-5">
+        <div class="section-label">// Win Big</div>
+        <h2 class="section-title">PRIZE <span>POOL</span></h2>
+      </div>
+      <div class="prizes-grid">
+        <div class="prize-card prize-gold">
+          <span class="prize-icon">🥇</span>
+          <div class="prize-place">1st Place</div>
+          <div class="prize-amount">Rs. 150,000</div>
+          <div class="prize-label">Per Category Winner</div>
+        </div>
+        <div class="prize-card prize-silver">
+          <span class="prize-icon">🥈</span>
+          <div class="prize-place">2nd Place</div>
+          <div class="prize-amount">Rs. 75,000</div>
+          <div class="prize-label">Per Category Runner-up</div>
+        </div>
+        <div class="prize-card prize-bronze">
+          <span class="prize-icon">🥉</span>
+          <div class="prize-place">3rd Place</div>
+          <div class="prize-amount">Rs. 35,000</div>
+          <div class="prize-label">Per Category</div>
+        </div>
+      </div>
+      <div class="prize-total">Total Prize Pool — <span>Rs. 260,000+</span></div>
+    </div>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Countdown
+    const eventDate = new Date('2026-05-08T09:00:00');
+    function updateCountdown() {
+      const diff = eventDate - new Date();
+      if (diff <= 0) return;
+      document.getElementById('cd-days').textContent  = String(Math.floor(diff / 86400000)).padStart(2,'0');
+      document.getElementById('cd-hours').textContent = String(Math.floor(diff % 86400000 / 3600000)).padStart(2,'0');
+      document.getElementById('cd-mins').textContent  = String(Math.floor(diff % 3600000 / 60000)).padStart(2,'0');
+      document.getElementById('cd-secs').textContent  = String(Math.floor(diff % 60000 / 1000)).padStart(2,'0');
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // FAQ
+    function toggleFaq(btn) {
+      const answer = btn.nextElementSibling;
+      const isOpen = answer.classList.contains('open');
+      document.querySelectorAll('.faq-a').forEach(a => a.classList.remove('open'));
+      document.querySelectorAll('.faq-q').forEach(q => q.classList.remove('open'));
+      if (!isOpen) { answer.classList.add('open'); btn.classList.add('open'); }
+    }
+  </script>
+</body>
+</html>

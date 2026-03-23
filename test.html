@@ -1,0 +1,1625 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BTech Fest 2026</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Barlow+Condensed:wght@400;700;900&family=Barlow:wght@400;600&display=swap"
+    rel="stylesheet">
+  <style>
+    /* ── Variables ── */
+    :root {
+      --purple: #6a11cb;
+      --pink: #e040fb;
+      --blue: #3b82f6;
+      --card-bg: rgba(106, 17, 203, 0.08);
+      --border: rgba(224, 64, 251, 0.15);
+    }
+
+    /* ── Reset / Base ── */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #0a0a0f;
+      color: #fff;
+    }
+
+    /* ── Section spacing ── */
+    .section {
+      padding: 120px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section+.section {
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .section-label {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 4px;
+      color: var(--pink);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1;
+      letter-spacing: -0.5px;
+    }
+
+    .section-title span {
+      background: linear-gradient(to right, var(--pink), var(--blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .glow-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.12;
+      pointer-events: none;
+    }
+
+    /* ── Scroll reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ══════════════════════════════
+       NAVBAR
+    ══════════════════════════════ */
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    nav.navbar {
+      position: fixed;
+      top: 0;
+      z-index: 100;
+      width: 100%;
+      padding: 14px 24px;
+      background: transparent;
+      border-bottom: 1px solid transparent;
+      transition: background 0.4s ease, border-color 0.4s ease, backdrop-filter 0.4s ease;
+    }
+
+    nav.navbar.scrolled {
+      background: rgba(6, 3, 15, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom-color: rgba(224, 64, 251, 0.1);
+    }
+
+    .offcanvas-btn-wrapper {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      padding: 3px;
+      background: conic-gradient(#e040fb, #6a11cb, #3b82f6, #e040fb);
+      animation: spin 3s linear infinite;
+      cursor: pointer;
+    }
+
+    .offcanvas-btn-wrapper button {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: #3d1a6e;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      align-items: flex-end;
+    }
+
+    .hamburger span {
+      display: block;
+      height: 2px;
+      background: #fff;
+      border-radius: 2px;
+    }
+
+    .hamburger span:nth-child(1),
+    .hamburger span:nth-child(3) {
+      width: 18px;
+    }
+
+    .hamburger span:nth-child(2) {
+      width: 12px;
+    }
+
+    .brand-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 3px;
+      background: linear-gradient(to right, #fff, rgba(224, 64, 251, 0.8));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .btn-exhibit {
+      display: inline-block;
+      padding: 11px 28px;
+      background: linear-gradient(to right, var(--purple), var(--pink));
+      color: #fff;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-decoration: none;
+      border-radius: 50px;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .btn-exhibit:hover {
+      opacity: 0.88;
+      transform: scale(1.04);
+      color: #fff;
+    }
+
+    /* ══════════════════════════════
+       OFFCANVAS
+    ══════════════════════════════ */
+    .offcanvas {
+      width: 290px !important;
+      background: #06030f !important;
+      border-right: 1px solid var(--border) !important;
+    }
+
+    .offcanvas::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(106, 17, 203, 0.04) 3px, rgba(106, 17, 203, 0.04) 4px);
+    }
+
+    .offcanvas-header {
+      position: relative;
+      z-index: 1;
+      border-bottom: 1px solid var(--border);
+      padding: 20px 24px;
+    }
+
+    .offcanvas-header::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--pink), var(--blue), transparent);
+    }
+
+    .offcanvas-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 3px;
+      background: linear-gradient(to right, var(--pink), var(--blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .offcanvas-body {
+      position: relative;
+      z-index: 1;
+      padding: 28px 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    .nav-item {
+      position: relative;
+      margin: 3px 14px;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .nav-link {
+      font-family: 'Orbitron', sans-serif !important;
+      font-size: 0.75rem !important;
+      letter-spacing: 2px !important;
+      color: rgba(255, 255, 255, 0.5) !important;
+      padding: 13px 18px !important;
+      display: flex !important;
+      align-items: center;
+      gap: 12px;
+      border-left: 2px solid transparent;
+      transition: all 0.25s !important;
+    }
+
+    .nav-link i {
+      color: rgba(224, 64, 251, 0.4);
+      transition: color 0.25s;
+      min-width: 18px;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: #fff !important;
+      background: rgba(106, 17, 203, 0.18) !important;
+      border-left-color: var(--pink) !important;
+    }
+
+    .nav-link:hover i,
+    .nav-link.active i {
+      color: var(--pink);
+    }
+
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--pink);
+      box-shadow: 0 0 8px var(--pink);
+    }
+
+    .nav-divider {
+      height: 1px;
+      margin: 14px 22px;
+      background: linear-gradient(to right, transparent, var(--border), transparent);
+    }
+
+    .offcanvas-footer {
+      padding: 18px 22px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .offcanvas-footer p {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 1.5px;
+      color: rgba(255, 255, 255, 0.2);
+      margin: 0;
+    }
+
+    .offcanvas-footer .event-tag {
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      color: rgba(224, 64, 251, 0.5);
+      margin-top: 4px;
+    }
+
+    /* ══════════════════════════════
+       HERO
+    ══════════════════════════════ */
+    .img-container {
+      position: relative;
+    }
+
+    .img-container img {
+      width: 100%;
+      height: 100vh;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      bottom: 80px;
+      left: 52px;
+      z-index: 10;
+      max-width: 780px;
+    }
+
+    .hero-title-thin {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 700;
+      -webkit-text-stroke: 2px #fff;
+      color: transparent;
+      display: block;
+      line-height: 1;
+      letter-spacing: 2px;
+    }
+
+    .hero-title-bold {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(4.5rem, 13vw, 10rem);
+      font-weight: 900;
+      color: #fff;
+      line-height: 0.9;
+      letter-spacing: -1px;
+      display: block;
+    }
+
+    .hero-subtitle p {
+      font-family: 'Barlow', sans-serif;
+      font-size: clamp(0.95rem, 2vw, 1.15rem);
+      font-weight: 600;
+      color: #fff;
+      margin: 0;
+      line-height: 1.8;
+      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
+    }
+
+    .btn-hero-outline {
+      display: inline-block;
+      padding: 14px 36px;
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(6px);
+      color: #fff;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-decoration: none;
+      border-radius: 8px;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .btn-hero-outline:hover {
+      background: rgba(255, 255, 255, 0.22);
+      transform: scale(1.03);
+      color: #fff;
+    }
+
+    .btn-hero-fill {
+      display: inline-block;
+      padding: 14px 36px;
+      background: linear-gradient(to right, #7b2ff7, #c840e0);
+      color: #fff;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .btn-hero-fill:hover {
+      opacity: 0.9;
+      transform: scale(1.03);
+      color: #fff;
+    }
+
+    .social-icons a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(0, 255, 85, 0.6);
+      color: rgba(0, 255, 85, 0.8);
+      font-size: 1rem;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .social-icons a:hover {
+      background: rgba(0, 255, 85, 0.15);
+      color: #00ff55;
+    }
+
+    /* ══════════════════════════════
+       ABOUT
+    ══════════════════════════════ */
+    #about {
+      background: #08040f;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+
+    .about-text {
+      font-family: 'Barlow', sans-serif;
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.55);
+      line-height: 1.9;
+    }
+
+    .about-stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 32px;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 22px 18px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--purple), var(--pink));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .stat-card:hover {
+      border-color: rgba(224, 64, 251, 0.4);
+      transform: translateY(-4px);
+    }
+
+    .stat-card:hover::before {
+      opacity: 1;
+    }
+
+    .stat-number {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.9rem;
+      font-weight: 700;
+      background: linear-gradient(to right, var(--pink), var(--blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 2px;
+      color: rgba(255, 255, 255, 0.38);
+      text-transform: uppercase;
+      margin-top: 6px;
+    }
+
+    .about-visual {
+      position: relative;
+      height: 380px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .grid-anim {
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(106, 17, 203, 0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(106, 17, 203, 0.06) 1px, transparent 1px);
+      background-size: 40px 40px;
+      animation: gridMove 12s linear infinite;
+      mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+      -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+    }
+
+    @keyframes gridMove {
+      to {
+        background-position: 0 40px;
+      }
+    }
+
+    .orbit-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(224, 64, 251, 0.1);
+      animation: orbitSpin 14s linear infinite;
+    }
+
+    @keyframes orbitSpin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .orbit-dot {
+      position: absolute;
+      top: -5px;
+      left: 50%;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--pink);
+      box-shadow: 0 0 6px 2px var(--pink), 0 0 20px var(--pink);
+      transform: translateX(-50%);
+      animation: dotPulse 2s ease-in-out infinite;
+    }
+
+    .orbit-dot.blue {
+      background: var(--blue);
+      box-shadow: 0 0 6px 2px var(--blue), 0 0 20px var(--blue);
+      animation-duration: 2.6s;
+    }
+
+    @keyframes dotPulse {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: translateX(-50%) scale(1);
+      }
+
+      50% {
+        opacity: 0.4;
+        transform: translateX(-50%) scale(0.45);
+      }
+    }
+
+    .center-logo-big {
+      position: relative;
+      z-index: 2;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 4px;
+      background: linear-gradient(to right, var(--pink), var(--blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-align: center;
+    }
+
+    /* ══════════════════════════════
+       PRESIDENT
+    ══════════════════════════════ */
+    #president {
+      background: #04020a;
+    }
+
+    .pres-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .pres-quote-mark {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 5rem;
+      line-height: 0.6;
+      color: var(--pink);
+      opacity: 0.35;
+      margin-top: 20px;
+    }
+
+    .pres-quote {
+      font-family: 'Barlow', sans-serif;
+      font-size: 1.02rem;
+      color: rgba(255, 255, 255, 0.62);
+      line-height: 2;
+      font-style: italic;
+      margin-top: 8px;
+    }
+
+    .pres-divider {
+      width: 56px;
+      height: 2px;
+      background: linear-gradient(to right, var(--pink), var(--blue));
+      margin: 24px 0 14px;
+    }
+
+    .pres-name {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      color: #fff;
+    }
+
+    .pres-title-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.82rem;
+      letter-spacing: 1.5px;
+      color: rgba(255, 255, 255, 0.32);
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .pres-img-wrapper {
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+
+    .pres-img-glow {
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(224, 64, 251, 0.18), transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .pres-img-border {
+      border-radius: 20px;
+      padding: 3px;
+      background: linear-gradient(135deg, var(--purple), var(--pink), var(--blue));
+    }
+
+    .pres-img-inner {
+      border-radius: 18px;
+      overflow: hidden;
+      background: #0d0618;
+    }
+
+    .pres-img-inner img {
+      width: 100%;
+      max-width: 340px;
+      height: 420px;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(15%) contrast(1.05);
+      transition: filter 0.4s;
+    }
+
+    .pres-img-inner img:hover {
+      filter: grayscale(0%) contrast(1.1);
+    }
+
+    .pres-badge {
+      position: absolute;
+      bottom: -16px;
+      left: -16px;
+      background: rgba(6, 3, 15, 0.92);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      backdrop-filter: blur(12px);
+    }
+
+    .pres-badge-icon {
+      font-size: 1.3rem;
+    }
+
+    .pres-badge-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.62rem;
+      letter-spacing: 2px;
+      color: #fff;
+    }
+
+    .pres-badge-sub {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.72rem;
+      color: rgba(224, 64, 251, 0.6);
+      letter-spacing: 1px;
+      margin-top: 2px;
+    }
+
+    /* ══════════════════════════════
+       CATEGORIES ACTION BAR
+    ══════════════════════════════ */
+    .cat-action-wrap {
+      background: #06030f;
+      padding: 0 0 80px;
+    }
+
+    .cat-action-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 24px;
+      padding: 28px 36px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+    }
+
+    .cat-action-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #fff;
+      text-transform: uppercase;
+    }
+
+    .cat-action-sub {
+      font-family: 'Barlow', sans-serif;
+      font-size: 0.82rem;
+      color: rgba(255, 255, 255, 0.38);
+      margin-top: 4px;
+    }
+
+    .cat-action-btns {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .cat-action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.58rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 11px 20px;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .cat-action-btn--primary {
+      background: linear-gradient(to right, var(--purple), var(--pink));
+      color: #fff;
+      border: 1px solid transparent;
+    }
+
+    .cat-action-btn--primary:hover {
+      opacity: 0.85;
+      transform: scale(1.03);
+      color: #fff;
+    }
+
+    .cat-action-btn--outline {
+      background: transparent;
+      color: rgba(255, 255, 255, 0.55);
+      border: 1px solid var(--border);
+    }
+
+    .cat-action-btn--outline:hover {
+      border-color: var(--pink);
+      color: #fff;
+      background: rgba(224, 64, 251, 0.08);
+    }
+
+    /* ══════════════════════════════
+       SPEAKERS CAROUSEL
+    ══════════════════════════════ */
+    #speakers {
+      background: #08040f;
+    }
+
+    .speakers-carousel {
+      position: relative;
+      margin-top: 48px;
+    }
+
+    .speakers-track-wrap {
+      overflow: hidden;
+    }
+
+    .speakers-track {
+      display: flex;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .speaker-card {
+      flex: 0 0 calc(25% - 15px);
+      margin-right: 20px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--card-bg);
+      transition: transform 0.3s, border-color 0.3s;
+    }
+
+    .speaker-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(224, 64, 251, 0.4);
+    }
+
+    .speaker-avatar {
+      width: 100%;
+      aspect-ratio: 1;
+      background: linear-gradient(135deg, #1a0533, #0d1f4a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .speaker-avatar::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(45deg, transparent, transparent 8px, 9px);
+    }
+
+    .speaker-info {
+      padding: 16px;
+    }
+
+    .speaker-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #fff;
+      text-transform: uppercase;
+    }
+
+    .speaker-role {
+      font-family: 'Barlow', sans-serif;
+      font-size: 0.75rem;
+      color: var(--pink);
+      margin-top: 2px;
+      opacity: 0.8;
+    }
+
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 28px;
+    }
+
+    .carousel-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(224, 64, 251, 0.25);
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      padding: 0;
+    }
+
+    .carousel-dot.active {
+      background: var(--pink);
+      width: 24px;
+      border-radius: 4px;
+      box-shadow: 0 0 8px var(--pink);
+    }
+
+    .carousel-nav {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .carousel-arrow {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: rgba(106, 17, 203, 0.1);
+      color: rgba(255, 255, 255, 0.55);
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .carousel-arrow:hover {
+      border-color: var(--pink);
+      color: #fff;
+      background: rgba(224, 64, 251, 0.15);
+      box-shadow: 0 0 12px rgba(224, 64, 251, 0.3);
+    }
+
+    /* ══════════════════════════════
+       SPONSORS
+    ══════════════════════════════ */
+    #sponsors {
+      background: #06030f;
+    }
+
+    .sponsors-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: center;
+      margin-top: 48px;
+    }
+
+    .sponsor-box {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      width: 155px;
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 2px;
+      color: rgba(255, 255, 255, 0.22);
+      text-transform: uppercase;
+      transition: border-color 0.3s, color 0.3s;
+    }
+
+    .sponsor-box:hover {
+      border-color: rgba(224, 64, 251, 0.35);
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    /* ══════════════════════════════
+       CTA
+    ══════════════════════════════ */
+    #cta {
+      background: #04020a;
+      text-align: center;
+    }
+
+    .cta-box {
+      padding: 100px 40px;
+      background: radial-gradient(ellipse at center, rgba(106, 17, 203, 0.14) 0%, transparent 70%);
+      position: relative;
+      border-radius: 24px;
+      border: 1px solid var(--border);
+    }
+
+    .cta-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--pink), var(--blue), transparent);
+      border-radius: 24px 24px 0 0;
+    }
+
+    .cta-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 18px;
+    }
+
+    .cta-sub {
+      font-family: 'Barlow', sans-serif;
+      color: rgba(255, 255, 255, 0.42);
+      font-size: 1rem;
+      margin-bottom: 36px;
+    }
+
+    .btn-cta-main {
+      display: inline-block;
+      padding: 15px 48px;
+      background: linear-gradient(to right, var(--purple), var(--pink));
+      color: #fff;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 3px;
+      text-decoration: none;
+      border-radius: 50px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-transform: uppercase;
+    }
+
+    .btn-cta-main:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 40px rgba(224, 64, 251, 0.4);
+      color: #fff;
+    }
+
+    /* ══════════════════════════════
+       FOOTER
+    ══════════════════════════════ */
+    footer {
+      background: linear-gradient(180deg, #0a0a0f 0%, #110820 100%);
+      border-top: 1px solid rgba(224, 64, 251, 0.2);
+      color: #fff;
+      padding: 72px 0 0;
+      font-family: 'Barlow', sans-serif;
+    }
+
+    .footer-glow-line {
+      height: 2px;
+      background: linear-gradient(to right, transparent, var(--purple), var(--pink), var(--blue), transparent);
+      margin-bottom: 64px;
+    }
+
+    .footer-logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.7rem;
+      letter-spacing: 3px;
+      background: linear-gradient(to right, var(--pink), var(--blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .footer-tagline {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      color: rgba(255, 255, 255, 0.4);
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .footer-desc {
+      font-size: 0.88rem;
+      color: rgba(255, 255, 255, 0.45);
+      line-height: 1.85;
+      margin-top: 14px;
+      max-width: 250px;
+    }
+
+    .footer-heading {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--pink);
+      margin-bottom: 18px;
+    }
+
+    .footer-links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-links li {
+      margin-bottom: 9px;
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.5);
+      text-decoration: none;
+      font-size: 0.88rem;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--pink);
+    }
+
+    .footer-event-box {
+      background: rgba(106, 17, 203, 0.1);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 22px;
+    }
+
+    .footer-event-box p {
+      font-size: 0.86rem;
+      color: rgba(255, 255, 255, 0.55);
+      margin: 0 0 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-event-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    .footer-event-box p i {
+      color: var(--pink);
+    }
+
+    .footer-social a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(224, 64, 251, 0.35);
+      color: rgba(255, 255, 255, 0.55);
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .footer-social a:hover {
+      border-color: var(--pink);
+      color: var(--pink);
+      background: rgba(224, 64, 251, 0.1);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 20px 0;
+      margin-top: 56px;
+    }
+
+    .footer-bottom p {
+      font-size: 0.78rem;
+      color: rgba(255, 255, 255, 0.28);
+      margin: 0;
+    }
+
+    .footer-bottom a {
+      color: rgba(224, 64, 251, 0.65);
+      text-decoration: none;
+    }
+
+    .footer-bottom a:hover {
+      color: var(--pink);
+    }
+
+    /* ══════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════ */
+    @media (max-width: 992px) {
+      .speaker-card {
+        flex: 0 0 calc(33.33% - 14px);
+      }
+    }
+
+    @media (max-width: 768px) {
+
+      .about-grid,
+      .pres-grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .about-visual {
+        height: 260px;
+      }
+
+      .pres-img-inner img {
+        height: 300px;
+      }
+
+      .pres-badge {
+        left: 0;
+      }
+
+      .speaker-card {
+        flex: 0 0 calc(50% - 10px);
+      }
+
+      .section {
+        padding: 80px 0;
+      }
+
+      .hero-overlay {
+        left: 24px;
+        bottom: 60px;
+      }
+
+      .cat-action-bar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .speaker-card {
+        flex: 0 0 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ══ NAVBAR ══ -->
+  <nav class="navbar d-flex justify-content-between align-items-center">
+    <div class="d-flex align-items-center gap-3">
+      <div class="offcanvas-btn-wrapper">
+        <button type="button" data-bs-toggle="offcanvas" data-bs-target="#mainMenu" aria-label="Open menu">
+          <div class="hamburger"><span></span><span></span><span></span></div>
+        </button>
+      </div>
+      <span class="brand-title">BTECH</span>
+    </div>
+    <a href="#" class="btn-exhibit">REGISTER NOW</a>
+  </nav>
+
+  <!-- ══ OFFCANVAS ══ -->
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="mainMenu">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title">Navigate</h5>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link active" href="#"><i class="bi bi-house-door"></i> Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-calendar-event"></i> Schedule</a></li>
+        <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-mortarboard"></i> Courses</a></li>
+        <div class="nav-divider"></div>
+        <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-ticket-perforated"></i> Register</a></li>
+        <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-people"></i> Speakers</a></li>
+        <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-envelope"></i> Contact</a></li>
+      </ul>
+      <div class="offcanvas-footer">
+        <p>BTech Fest 2026</p>
+        <div class="event-tag">8–9 May · BNU Lahore</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ HERO ══ -->
+  <div class="img-container">
+    <img
+      src="https://res.cloudinary.com/dqfmlcbew/image/upload/v1772566755/Make_me_a_asthetic_image_like_the_uploaded_one__of_delpmaspu_wtxeu9.jpg"
+      alt="BTech Fest Hero">
+    <div class="hero-overlay">
+      <div class="mb-3">
+        <span class="hero-title-thin">INTRODUCING</span>
+        <span class="hero-title-bold">BTECH FEST</span>
+      </div>
+      <div class="hero-subtitle mb-4">
+        <p>Join the global tech community in BNU</p>
+        <p>From 8–9 MAY 2026, Beacon House National University, Lahore</p>
+      </div>
+      <div class="d-flex flex-wrap gap-3 mb-4">
+        <a href="#" class="btn-hero-fill">EXHIBIT 2026</a>
+        <a href="#" class="btn-hero-outline">EXPLORE TICKETS</a>
+      </div>
+      <div class="social-icons d-flex gap-2">
+        <a href="#"><i class="bi bi-facebook"></i></a>
+        <a href="#"><i class="bi bi-instagram"></i></a>
+        <a href="#"><i class="bi bi-linkedin"></i></a>
+        <a href="#"><i class="bi bi-tiktok"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ ABOUT ══ -->
+  <section class="section" id="about" style="margin-top: 3%;">
+    <div class="glow-orb" style="width:500px;height:500px;background:var(--purple);top:-100px;right:-150px;"></div>
+    <div class="container">
+      <div class="about-grid">
+        <div class="reveal">
+          <div class="section-label">// About the Event</div>
+          <h2 class="section-title">WHERE TECH<br><span>MEETS VISION</span></h2>
+          <p class="about-text mt-4">BTech Fest is Beacon House National University's flagship technology event — a
+            two-day immersive experience uniting students, industry leaders, and innovators to explore the frontiers of
+            technology, AI, and digital transformation.</p>
+          <div class="about-stat-grid">
+            <div class="stat-card reveal">
+              <div class="stat-number">2K+</div>
+              <div class="stat-label">Attendees</div>
+            </div>
+            <div class="stat-card reveal">
+              <div class="stat-number">30+</div>
+              <div class="stat-label">Speakers</div>
+            </div>
+            <div class="stat-card reveal">
+              <div class="stat-number">15+</div>
+              <div class="stat-label">Workshops</div>
+            </div>
+            <div class="stat-card reveal">
+              <div class="stat-number">2</div>
+              <div class="stat-label">Days of Innovation</div>
+            </div>
+          </div>
+        </div>
+        <div class="about-visual reveal">
+          <div class="grid-anim"></div>
+          <div class="orbit-ring" style="width:160px;height:160px;animation-duration:10s;">
+            <div class="orbit-dot"></div>
+          </div>
+          <div class="orbit-ring" style="width:260px;height:260px;animation-duration:18s;animation-direction:reverse;">
+            <div class="orbit-dot blue"></div>
+          </div>
+          <div class="orbit-ring"
+            style="width:360px;height:360px;animation-duration:26s;border-color:rgba(59,130,246,0.08);">
+            <div class="orbit-dot"
+              style="width:6px;height:6px;top:-3px;background:#a78bfa;box-shadow:0 0 6px 2px #a78bfa,0 0 16px #a78bfa;animation-duration:3.2s;">
+            </div>
+          </div>
+          <div class="center-logo-big">BTECH<br><span
+              style="font-size:0.6rem;letter-spacing:6px;color:rgba(255,255,255,0.28);">FEST 2026</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ PRESIDENT ══ -->
+  <section class="section" id="president" style="margin-top: 3%;">
+    <div class="glow-orb" style="width:400px;height:400px;background:var(--purple);bottom:-80px;left:-80px;"></div>
+    <div class="container">
+      <div class="pres-grid">
+        <div class="reveal">
+          <div class="section-label">// President's Vision</div>
+          <h2 class="section-title" style="font-size:clamp(1.8rem,4vw,3rem);">A MESSAGE FROM<br><span>OUR
+              PRESIDENT</span></h2>
+          <div class="pres-quote-mark">"</div>
+          <p class="pres-quote">BTech Fest is not just an event — it is a declaration that the next generation of
+            innovators is ready. We believe in building a Pakistan where technology is not just consumed but created.
+            This festival is our commitment to nurturing that vision, one brilliant mind at a time.</p>
+          <div class="pres-divider"></div>
+          <div class="pres-name">Ms. [President Name]</div>
+          <div class="pres-title-label">President, BTECH, BNU</div>
+        </div>
+        <div class="reveal">
+          <div class="pres-img-wrapper">
+            <div class="pres-img-glow"></div>
+            <div class="pres-img-border">
+              <div class="pres-img-inner">
+                <img
+                  src="https://media.istockphoto.com/id/1681109490/photo/portrait-of-beautiful-confident-young-adult-female-university-student.jpg?s=612x612&w=0&k=20&c=yYkuG0puqcXulsW8CinfYZWhlosFfVu1fSfBav1kekI="
+                  alt="President">
+              </div>
+            </div>
+            <div class="pres-badge">
+              <span class="pres-badge-icon">🎓</span>
+              <div>
+                <div class="pres-badge-title">BTECH President</div>
+                <div class="pres-badge-sub">Est. 2026</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CATEGORIES ACTION BAR ══ -->
+  <div class="cat-action-wrap" style="margin-top: 7%; margin-bottom: 5%;">
+    <div class="container">
+      <div class="cat-action-bar reveal">
+        <div class="cat-action-left">
+          <div class="cat-action-title">Ready to compete?</div>
+          <div class="cat-action-sub">We offer a diverse range of competition categories spanning AI, cybersecurity, web
+            development, robotics, and more — designed for every kind of tech mind.
+            Explore live project showcases, hands-on workshops, and startup pitches where students and innovators bring
+            their boldest ideas to life.
+            Discover what's waiting for you at BTech Fest 2026 — from industry speakers to prize battles, there's
+            something for everyone. Find out more.</div>
+        </div>
+        <div class="cat-action-btns">
+          <a href="#" class="cat-action-btn cat-action-btn--primary"><i class="bi bi-grid-3x3-gap"></i> All
+            Categories</a>
+          <a href="#" class="cat-action-btn cat-action-btn--outline"><i class="bi bi-info-circle"></i> Event Info</a>
+          <a href="#" class="cat-action-btn cat-action-btn--outline"><i class="bi bi-ticket-perforated"></i> Costs &
+            Tickets</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ CTA ══ -->
+  <section class="section" id="cta" style="margin-top: 3%;">
+    <div class="container">
+      <div class="cta-box reveal">
+        <div class="section-label" style="justify-content:center;display:flex;">// Don't Miss Out</div>
+        <div class="cta-title">READY TO <span
+            style="background:linear-gradient(to right,#e040fb,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">LEAP
+            IN?</span></div>
+        <p class="cta-sub">Seats are limited. Secure your spot at BTech Fest 2026 today.</p>
+        <a href="#" class="btn-cta-main">Register Now</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ SPEAKERS ══ -->
+  <section class="section" id="speakers">
+    <div class="glow-orb" style="width:450px;height:450px;background:var(--pink);top:-50px;right:-100px;opacity:0.1;">
+    </div>
+    <div class="container">
+      <div class="text-center reveal">
+        <div class="section-label">// Featured Members</div>
+        <h2 class="section-title">MEET THE <span>Directorates</span></h2>
+      </div>
+      <div class="speakers-carousel reveal">
+        <div class="speakers-track-wrap">
+          <div class="speakers-track" id="speakersTrack">
+            <div class="speaker-card">
+              <div class="speaker-avatar">👨</div>
+              <div class="speaker-info">
+                <div class="speaker-name">Ali Hassan</div>
+                <div class="speaker-role">AI Lead · Google Pakistan</div>
+              </div>
+            </div>
+            <div class="speaker-card">
+              <div class="speaker-avatar">👩‍🔬</div>
+              <div class="speaker-info">
+                <div class="speaker-name">Sara Malik</div>
+                <div class="speaker-role">CTO · TechVentures PK</div>
+              </div>
+            </div>
+            <div class="speaker-card">
+              <div class="speaker-avatar">🧑‍🚀</div>
+              <div class="speaker-info">
+                <div class="speaker-name">Usman Raza</div>
+                <div class="speaker-role">Founder · NeuralNest</div>
+              </div>
+            </div>
+            <div class="speaker-card">
+              <div class="speaker-avatar">👩‍💼</div>
+              <div class="speaker-info">
+                <div class="speaker-name">Ayesha Tariq</div>
+                <div class="speaker-role">Blockchain · Chainlink</div>
+              </div>
+            </div>
+            <div class="speaker-card">
+              <div class="speaker-avatar">🧑‍💻</div>
+              <div class="speaker-info">
+                <div class="speaker-name">Bilal Chaudhry</div>
+                <div class="speaker-role">DevOps Lead · AWS</div>
+              </div>
+            </div>
+            <div class="speaker-card">
+              <div class="speaker-avatar">👩‍🎓</div>
+              <div class="speaker-info">
+                <div class="speaker-name">Hina Qureshi</div>
+                <div class="speaker-role">Data Scientist · Meta</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-dots" id="speakerDots"></div>
+        <div class="carousel-nav">
+          <button class="carousel-arrow" id="speakerPrev"><i class="bi bi-chevron-left"></i></button>
+          <button class="carousel-arrow" id="speakerNext"><i class="bi bi-chevron-right"></i></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ SPONSORS ══ -->
+  <section class="section" id="sponsors" style="margin-top: 3%;">
+    <div class="container">
+      <div class="text-center reveal">
+        <div class="section-label">// Our Partners</div>
+        <h2 class="section-title">POWERED BY <span>VISIONARIES</span></h2>
+      </div>
+      <div class="sponsors-row">
+        <div class="sponsor-box reveal">TechCorp</div>
+        <div class="sponsor-box reveal">NeuralNet</div>
+        <div class="sponsor-box reveal">CloudX</div>
+        <div class="sponsor-box reveal">ByteForge</div>
+        <div class="sponsor-box reveal">DataSync</div>
+      </div>
+    </div>
+  </section>
+
+  
+
+  <!-- ══ FOOTER ══ -->
+  <footer>
+    <div class="footer-glow-line"></div>
+    <div class="container">
+      <div class="row g-5">
+        <div class="col-lg-4 col-md-6">
+          <div class="footer-logo">BTECH</div>
+          <div class="footer-tagline">Beacon House Tech Fest</div>
+          <p class="footer-desc">The premier technology festival bringing together innovators, developers, and
+            visionaries from across the globe.</p>
+          <div class="footer-social d-flex gap-2 mt-4">
+            <a href="#"><i class="bi bi-facebook"></i></a>
+            <a href="#"><i class="bi bi-instagram"></i></a>
+            <a href="#"><i class="bi bi-linkedin"></i></a>
+            <a href="#"><i class="bi bi-tiktok"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-6 col-6">
+          <div class="footer-heading">Quick Links</div>
+          <ul class="footer-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Schedule</a></li>
+            <li><a href="#">Speakers</a></li>
+            <li><a href="#">Sponsors</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-2 col-md-6 col-6">
+          <div class="footer-heading">Attend</div>
+          <ul class="footer-links">
+            <li><a href="#">Register</a></li>
+            <li><a href="#">Explore Tickets</a></li>
+            <li><a href="#">Exhibit 2026</a></li>
+            <li><a href="#">Volunteer</a></li>
+            <li><a href="#">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="footer-heading">Event Info</div>
+          <div class="footer-event-box">
+            <p><i class="bi bi-calendar-event"></i> 8–9 May 2026</p>
+            <p><i class="bi bi-geo-alt"></i> Beacon House National University</p>
+            <p><i class="bi bi-pin-map"></i> Lahore, Pakistan</p>
+            <p><i class="bi bi-envelope"></i> btech@bnu.edu.pk</p>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+          <p>© 2026 BTech Fest — Beacon House National University. All rights reserved.</p>
+          <p><a href="#">Privacy Policy</a> &nbsp;·&nbsp; <a href="#">Terms of Use</a></p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Carousel
+    (function () {
+      const track = document.getElementById('speakersTrack');
+      const dotsContainer = document.getElementById('speakerDots');
+      const cards = track.querySelectorAll('.speaker-card');
+      let current = 0, autoTimer;
+
+      const getVisible = () => window.innerWidth <= 480 ? 1 : window.innerWidth <= 768 ? 2 : window.innerWidth <= 992 ? 3 : 4;
+      const totalSlides = () => Math.ceil(cards.length / getVisible());
+
+      function buildDots() {
+        dotsContainer.innerHTML = '';
+        for (let i = 0; i < totalSlides(); i++) {
+          const d = document.createElement('button');
+          d.className = 'carousel-dot' + (i === current ? ' active' : '');
+          d.addEventListener('click', () => goTo(i));
+          dotsContainer.appendChild(d);
+        }
+      }
+
+      function goTo(index) {
+        current = (index + totalSlides()) % totalSlides();
+        track.style.transform = `translateX(-${current * getVisible() * (cards[0].offsetWidth + 20)}px)`;
+        dotsContainer.querySelectorAll('.carousel-dot').forEach((d, i) => d.classList.toggle('active', i === current));
+      }
+
+      function startAuto() { clearInterval(autoTimer); autoTimer = setInterval(() => goTo(current + 1), 3500); }
+
+      document.getElementById('speakerPrev').addEventListener('click', () => { goTo(current - 1); startAuto(); });
+      document.getElementById('speakerNext').addEventListener('click', () => { goTo(current + 1); startAuto(); });
+      window.addEventListener('resize', () => { buildDots(); goTo(0); });
+
+      buildDots(); startAuto();
+    })();
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => { if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 70); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    const navbar = document.querySelector('nav.navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 10);
+    })
+  </script>
+</body>
+
+</html>
